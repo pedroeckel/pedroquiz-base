@@ -1,19 +1,14 @@
-import styled from 'styled-components'
+/* eslint-disable no-console */
+import React from 'react';
+import styled from 'styled-components';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+
 import db from '../db.json';
-import Widget from '../src/components/Widget'
-import QuizBackground from '../src/components/QuizBackground'
-import Footer from '../src/components/Footer'
-import GitHubCorner from '../src/components/GitHubCorner'
-
-
-
-/*const BackgroundImage = styled.div `
-  background-image: url(${db.bg});
-  flex: 1;
-  background-size: cover;
-  background-position: center;
-
-`;*/
+import Widget from '../src/components/Widget';
+import QuizBackground from '../src/components/QuizBackground';
+import Footer from '../src/components/Footer';
+import GitHubCorner from '../src/components/GitHubCorner';
 
 export const QuizContainer = styled.div`
   width: 100%;
@@ -26,11 +21,15 @@ export const QuizContainer = styled.div`
   }
 `;
 
-
-
 export default function Home() {
+  const router = useRouter();
+  const [name, setName] = React.useState('');
+
   return (
     <QuizBackground backgroundImage={db.bg}>
+      <Head>
+        <title>PedroQuiz</title>
+      </Head>
       <QuizContainer>
         <Widget>
           <Widget.Header>
@@ -38,10 +37,29 @@ export default function Home() {
 
           </Widget.Header>
           <Widget.Content>
-            <p> Lorem ipsum dolor sit amet...</p>
+            <form onSubmit={function (infosDoEvento) {
+              infosDoEvento.preventDefault();
+
+              router.push(`quiz?name=${name}`);
+            }}
+            >
+              <input
+                onChange={function (infosDoEvento) {
+                  console.log(infosDoEvento.target.value);
+                  // name = infosDoEvento.target.value;
+                  setName(infosDoEvento.target.value);
+                }}
+                placeholder="Diz aí o seu nome"
+
+              />
+              <button type="submit" disabled={name.length === 0}>
+                Jogar
+                {' '}
+                {name}
+              </button>
+            </form>
 
           </Widget.Content>
-
 
         </Widget>
 
@@ -55,16 +73,12 @@ export default function Home() {
 
           </Widget.Content>
 
-
         </Widget>
 
         <Footer />
-        
+
       </QuizContainer>
-      <GitHubCorner projectUrl="https://github.com/alura-challenges/aluraquiz-base"/>
-    </QuizBackground>  
+      <GitHubCorner projectUrl="https://github.com/alura-challenges/aluraquiz-base" />
+    </QuizBackground>
   );
-
-
-  
 }
