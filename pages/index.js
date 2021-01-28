@@ -1,25 +1,19 @@
 /* eslint-disable no-console */
 import React from 'react';
-import styled from 'styled-components';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import db from '../db.json';
 import Widget from '../src/components/Widget';
 import QuizBackground from '../src/components/QuizBackground';
+import QuizContainer from '../src/components/QuizContainer';
 import Footer from '../src/components/Footer';
 import GitHubCorner from '../src/components/GitHubCorner';
+import Input from '../src/components/Input';
+import Button from '../src/components/Button';
+import QuizLogo from '../src/components/QuizLogo';
 
-export const QuizContainer = styled.div`
-  width: 100%;
-  max-width: 350px;
-  padding-top: 45px;
-  margin: auto 10%;
-  @media screen and (max-width: 500px) {
-    margin: auto;
-    padding: 15px;
-  }
-`;
+
 
 export default function Home() {
   const router = useRouter();
@@ -31,6 +25,7 @@ export default function Home() {
         <title>PedroQuiz</title>
       </Head>
       <QuizContainer>
+        <QuizLogo />
         <Widget>
           <Widget.Header>
             <h1>Quiz do Pedro</h1>
@@ -43,7 +38,9 @@ export default function Home() {
               router.push(`quiz?name=${name}`);
             }}
             >
-              <input
+              <Input
+                name="nomeDoUsuario"
+                // eslint-disable-next-line react/jsx-no-bind
                 onChange={function (infosDoEvento) {
                   console.log(infosDoEvento.target.value);
                   // name = infosDoEvento.target.value;
@@ -52,11 +49,9 @@ export default function Home() {
                 placeholder="Diz aí o seu nome"
 
               />
-              <button type="submit" disabled={name.length === 0}>
-                Jogar
-                {' '}
-                {name}
-              </button>
+              <Button type="submit" disabled={name.length === 0}>
+                {'Jogar{name}'}
+              </Button>
             </form>
 
           </Widget.Content>
