@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable no-console */
 import React from 'react';
 import Head from 'next/head';
@@ -12,8 +13,6 @@ import GitHubCorner from '../src/components/GitHubCorner';
 import Input from '../src/components/Input';
 import Button from '../src/components/Button';
 import QuizLogo from '../src/components/QuizLogo';
-
-
 
 export default function Home() {
   const router = useRouter();
@@ -50,7 +49,7 @@ export default function Home() {
 
               />
               <Button type="submit" disabled={name.length === 0}>
-                {'Jogar{name}'}
+                {`Jogar ${name}`}
               </Button>
             </form>
 
